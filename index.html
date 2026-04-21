@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="description" content="A Diagnostic Study of Region-Based Representations in Multimodal LLMs">
-  <meta name="keywords" content="Image Segmentation, Large Multimodal Model, Referring Expression Segmentation">
+  <meta name="keywords" content="Large Multimodal Model, Vision-Language Model, Region-based Representations">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>A Diagnostic Study of Region-Based Representations in Multimodal LLMs</title>
 
@@ -142,12 +142,12 @@
 
           <div class="column has-text-centered">
             <div class="publication-links">
-              <!-- <span class="link-block">
+              <span class="link-block">
                 <a href="https://arxiv.org/abs/???" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><i class="ai ai-arxiv"></i></span>
-                  <span>arXiv</span>
+                  <span>arXiv (TBD)</span>
                 </a>
-              </span> -->
+              </span>
               <span class="link-block">
                 <a href="https://github.com/Iiji/RegionMLLM" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><i class="fab fa-github"></i></span>
@@ -171,9 +171,9 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-four-fifths has-text-centered">
-          <h2 class="title is-4"><i>Placeholder - Summary.</i></h2>
+          <h2 class="title is-4"><i>Region-based Representations enables efficient, performant, and explainable visual perception in MLLMs.</i></h2>
           <div style="margin-top: 2rem;">
-            <img src="./static/images/1.png" alt="Omnimodal Referring Expression Segmentation">
+            <img src="./static/images/1.png" alt="Teaser">
           </div>
         </div>
       </div>
@@ -185,11 +185,55 @@
 
     <div class="columns is-centered content-block">
       <div class="column is-full-width">
-        <h2 class="title is-3">Placeholder - Part I</h2>
+        <h2 class="title is-3">Establishing new Perception Level</h2>
         <div class="content has-text-centered">
-          <img src="./static/images/2.png" alt="Omnimodal Referring Expression Segmentation">
-          <p>
-            Placeholder part I
+          <p class="has-text-justified">
+            We introduce a new perception level for MLLMs: moving from fixed patch grids to
+            semantically meaningful regions. Compared with patch tokens, region tokens are more
+            efficient at high resolution, better aligned with object-level reasoning, and easier 
+            to interpret through region-level attention.
+          </p>
+          <p class="has-text-justified">
+            We first show that visual token order is largely non-critical after visual encoding:
+            shuffling post-encoder tokens causes minimal impact, while shuffling raw image patches
+            before encoding significantly hurts performance. This indicates that spatial information
+            is mainly carried by positional embeddings in the visual encoder, which enables flexible
+            visual-token designs. Based on this, we formulate region-based representations with two 
+            steps: region partitioning and feature aggregation (e.g., average pooling). 
+            We further compare three region sources: segmentation-based regions 
+            (semantic but feature-agnostic), clustering-based regions (coherent but less semantic), 
+            and a hybrid strategy that refines segmentation masks with feature clustering 
+            to balance semantic grounding and feature consistency.
+          </p>
+          <img src="./static/images/demo_v3.png" alt="Region-based representations and various approaches to mitigate visual feature incoherency within MLLMs">
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered content-block">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Are Region-Based Representations Better Alternatives?</h2>
+        <div class="content has-text-centered">
+          <p class="has-text-justified">
+            We compare region-based representations with patch-based baselines and
+            token-reduction methods across diverse benchmarks, while also examining interpretability
+            and end-to-end efficiency. Overall, region-based representations are competitive
+            alternatives: they maintain comparable performance, deliver more grounded and
+            human-interpretable attention over meaningful entities, and significantly reduce visual
+            computation.
+          </p>
+          <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+            <img src="./static/images/attention_vis.png" alt="MLLM Attention over Visual Tokens" style="width: 46%; max-width: 520px; height: auto;">
+            <img src="./static/images/qwen3_efficiency.png" alt="Qwen3-VL 4B Efficiency Comparison" style="width: 46%; max-width: 520px; height: auto;">
+          </div>
+          <p class="has-text-justified">
+            We further find that the advantages are most evident on challenging tasks requiring
+            fine-grained region/object-level understanding, such as OCR-like character recognition,
+            symbolic reasoning, and 3D object-centric perception. In terms of efficiency,
+            region-based designs substantially reduce FLOPs, and with modern VLM backbones (e.g.,
+            Qwen3-VL), they also translate into clear latency gains at higher resolutions.
+            These results support our first finding: <strong>region-based representations are practical,
+            interpretable, and scalable alternatives to fixed patch grids</strong>.
           </p>
         </div>
       </div>
@@ -197,24 +241,22 @@
 
     <div class="columns is-centered content-block">
       <div class="column is-full-width">
-        <h2 class="title is-3">Placeholder - Part II</h2>
+        <h2 class="title is-3">What is the Major Bottleneck in Region-Based Representations?</h2>
         <div class="content has-text-centered">
-          <img src="./static/images/5.png" alt="Refer to Any Segmentation Mask Group">
-          <img src="./static/images/qwen3_efficiency.png" alt="Refer to Any Segmentation Mask Group">
-          <p>
-            Placeholder part II
+          <p class="has-text-justified">
+            Our analysis identifies a key bottleneck: <strong>visual feature incoherency</strong> in
+            the raw patch features produced by common visual encoders. Region-based aggregation
+            assumes that nearby patches within the same semantic entity are locally consistent,
+            but this assumption is often violated in practice.
           </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="columns is-centered content-block">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Placeholder - Part III</h2>
-        <div class="content has-text-centered">
-          <img src="./static/images/3.png" alt="Refer to Any Segmentation Mask Group">
-          <p>
-            Placeholder part III
+          <img src="./static/images/feature_vis.png" alt="Visual Encoders' Raw Features and Corresponding Feature Norms">
+          <p class="has-text-justified">
+            We decompose this issue into two major factors: <strong>high-norm artifacts</strong>
+            (outlier tokens that dominate aggregation and attention) and <strong>non-smoothness</strong>
+            (adjacent patches with unexpectedly dissimilar features). Together, they can wash out
+            fine-grained details and degrade region-level representations, especially for
+            segmentation-driven grouping. This directly answers RQ2: improving feature coherency is
+            the central challenge for making region-based MLLMs consistently superior.
           </p>
         </div>
       </div>
