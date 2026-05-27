@@ -137,7 +137,7 @@
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>University of Illinois Urbana-Champaign,</span>
+            <span class="author-block"><sup>1</sup>University of Illinois Urbana-Champaign</span>
           </div>
 
           <div class="column has-text-centered">
@@ -173,7 +173,7 @@
         <div class="column is-four-fifths has-text-centered">
           <h2 class="title is-4"><i>Region-based Representations enables efficient, performant, and explainable visual perception in MLLMs.</i></h2>
           <div style="margin-top: 2rem;">
-            <img src="./static/images/1.png" alt="Teaser">
+            <img src="./static/images/teaser.png" alt="Teaser">
           </div>
         </div>
       </div>
@@ -264,49 +264,32 @@
 
     <div class="columns is-centered content-block">
       <div class="column is-full-width">
-        <h2 class="title is-3">Placeholder - Part IV</h2>
-        <!-- <div class="content">
-          <table class="table is-bordered">
-            <thead>
-              <tr>
-                <th rowspan="2">Model</th>
-                <th rowspan="2">RES</th>
-                <th rowspan="2">GRES</th>
-                <th colspan="3">ORES</th>
-              </tr>
-              <tr>
-                <th>w/o &lt;mask-ref&gt;</th>
-                <th>w/ &lt;mask-ref&gt;</th>
-                <th>Overall</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Prev. SOTA</td>
-                <td>77.1<br>(PSALM)</td>
-                <td>67.8<br>(SAM4MLLM)</td>
-                <td>49.6<br>(GSVA)</td>
-                <td>N/A*</td>
-                <td>N/A*</td>
-              </tr>
-              <tr>
-                <td><strong>Ours</strong></td>
-                <td><strong>77.8</strong></td>
-                <td><strong>71.8</strong></td>
-                <td><strong>74.6</strong></td>
-                <td><strong>68.8</strong></td>
-                <td><strong>73.1</strong></td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="has-text-centered">
-            * No previous methods could understand visual reference prompts
-          </p>
-        </div> -->
+        <h2 class="title is-3">How Can We Mitigate Feature Incoherency?</h2>
         <div class="content has-text-centered">
-          <img src="./static/images/4.png" alt="Qualitative comparison">
-          <p>
-            Placeholder part IV
+          <p class="has-text-justified">
+            We study several complementary ways to reduce the impact of incoherent patch
+            features: using more coherent visual encoders, normalizing raw features, choosing
+            better region sources, and replacing fixed pooling with learnable aggregation. Among
+            these, the most fundamental solution is to start from a visual encoder whose features
+            are already better aligned with both language and local visual structure.
+          </p>
+          <img src="./static/images/diffregions.png" alt="Generated region masks from different methods and visual encoders.">
+          <p class="has-text-justified">
+            <strong>Agglomerative visual encoders</strong> such as RADIOv2.5 provide this balance by distilling
+            from multiple teachers, combining language alignment from CLIP/SigLIP-style models
+            with fine-grained perception from self-supervised and segmentation-oriented models.
+            With smoother features, clustering produces fewer but more semantically coherent
+            regions, and the hybrid segmentation-plus-clustering strategy becomes more effective.
+          </p>
+          <p class="has-text-justified">
+            Normalization offers a lightweight way to suppress high-norm artifacts before region
+            aggregation, and it generally improves region-based representations, though it may
+            trade off some information through rescaling. We also test a learnable cross-attention
+            aggregator that attends from a pooled region query back to its patch features, but its
+            gains are limited and inconsistent. Overall, our last finding is that
+            <strong>better visual encoders are the most effective path to mitigating incoherency</strong>,
+            while normalization, region-source design, and aggregation modules provide useful but
+            more conditional improvements.
           </p>
         </div>
       </div>
